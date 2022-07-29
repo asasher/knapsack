@@ -20,7 +20,7 @@ def knapsack(items, weights, capacity, limit):
         )
     return _knapsack(len(items) - 1, capacity, limit)
 
-def read_citi_transactions(filename):
+def read_transactions(filename, items_column_index, weights_column_index):
     '''
     Read a csv file with transactions and return as a list of lists.
     '''
@@ -30,14 +30,23 @@ def read_citi_transactions(filename):
     with open(filename, 'r') as f:
         reader = csv.reader(f)
         for row in reader:
-            transactions.append(row[0].strip())
-            points.append(int(row[1].strip()))
+            transactions.append(row[items_column_index].strip())
+            points.append(int(row[weights_column_index].strip()))
     
     return transactions, points
 
 if __name__ == '__main__':
-    capacity = int(sys.argv[1])
-    transactions, points = read_citi_transactions('./transactions.csv')
+    if len(sys.argv) != 6:
+        print('Usage: knapsack.py <filename> <items_column_index> <weights_column_index> <capacity> <limit>')
+        sys.exit(1)
+
+    filename = sys.argv[1]
+    items_column_index = int(sys.argv[2])
+    weights_column_index = int(sys.argv[3])
+    capacity = int(sys.argv[4])
+    limit = int(sys.argv[5])
+
+    transactions, points = read_transactions(filename, items_column_index, weights_column_index)
     weight, items = knapsack(transactions, points, capacity, 4)
     print(weight, capacity, capacity - weight)
     for item in items:

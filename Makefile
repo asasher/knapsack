@@ -1,0 +1,8 @@
+FILENAME ?= transactions.csv
+ITEMS_COLUMN_INDEX ?= 0
+WEIGHTS_COLUMN_INDEX ?= 1
+LIMIT ?= 4
+CAPACITY ?= 0
+
+run:
+	poetry run python knapsack.py ${FILENAME} ${ITEMS_COLUMN_INDEX} ${WEIGHTS_COLUMN_INDEX} ${CAPACITY} ${LIMIT} 
