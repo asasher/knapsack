@@ -41,13 +41,14 @@ if __name__ == '__main__':
         sys.exit(1)
 
     filename = sys.argv[1]
-    items_column_index = int(sys.argv[2])
+    items_column_index = int(sys.argv[2]) # Column containing item names
     weights_column_index = int(sys.argv[3])
     capacity = int(sys.argv[4])
-    limit = int(sys.argv[5])
+    limit = int(sys.argv[5]) # Maximum numnber of items to be selected
 
     transactions, points = read_transactions(filename, items_column_index, weights_column_index)
-    weight, items = knapsack(transactions, points, capacity, 4)
+    transactions = [f"{x} {y}" for x, y in zip(transactions, points)]
+    weight, items = knapsack(transactions, points, capacity, limit)
     print(weight, capacity, capacity - weight)
     for item in items:
         print(item)
